@@ -102,24 +102,24 @@ class am_modulation(gr.top_block, Qt.QWidget):
         self._info_signal_selector_combo_box.currentIndexChanged.connect(
             lambda i: self.set_info_signal_selector(self._info_signal_selector_options[i]))
         # Create the radio buttons
-        self.top_grid_layout.addWidget(self._info_signal_selector_tool_bar, 2, 0, 1, 1)
-        for r in range(2, 3):
+        self.top_grid_layout.addWidget(self._info_signal_selector_tool_bar, 0, 0, 1, 1)
+        for r in range(0, 1):
             self.top_grid_layout.setRowStretch(r, 1)
         for c in range(0, 1):
             self.top_grid_layout.setColumnStretch(c, 1)
-        self._info_signal_freq_range = Range(0, 1e3, 1, 50, 200)
+        self._info_signal_freq_range = Range(0, 1e3, 50, 50, 200)
         self._info_signal_freq_win = RangeWidget(self._info_signal_freq_range, self.set_info_signal_freq, "'info_signal_freq'", "counter_slider", float, QtCore.Qt.Horizontal)
-        self.top_grid_layout.addWidget(self._info_signal_freq_win, 2, 2, 1, 1)
-        for r in range(2, 3):
-            self.top_grid_layout.setRowStretch(r, 1)
-        for c in range(2, 3):
-            self.top_grid_layout.setColumnStretch(c, 1)
-        self._carrier_signal_freq_range = Range(0, 10e3, 10, 500, 200)
-        self._carrier_signal_freq_win = RangeWidget(self._carrier_signal_freq_range, self.set_carrier_signal_freq, "'carrier_signal_freq'", "counter_slider", float, QtCore.Qt.Vertical)
-        self.top_grid_layout.addWidget(self._carrier_signal_freq_win, 2, 1, 1, 1)
+        self.top_grid_layout.addWidget(self._info_signal_freq_win, 2, 1, 1, 1)
         for r in range(2, 3):
             self.top_grid_layout.setRowStretch(r, 1)
         for c in range(1, 2):
+            self.top_grid_layout.setColumnStretch(c, 1)
+        self._carrier_signal_freq_range = Range(0, 10e3, 100, 500, 200)
+        self._carrier_signal_freq_win = RangeWidget(self._carrier_signal_freq_range, self.set_carrier_signal_freq, "'carrier_signal_freq'", "counter_slider", float, QtCore.Qt.Horizontal)
+        self.top_grid_layout.addWidget(self._carrier_signal_freq_win, 2, 0, 1, 1)
+        for r in range(2, 3):
+            self.top_grid_layout.setRowStretch(r, 1)
+        for c in range(0, 1):
             self.top_grid_layout.setColumnStretch(c, 1)
         self.qtgui_time_sink_x_0 = qtgui.time_sink_f(
             1024, #size
@@ -168,10 +168,10 @@ class am_modulation(gr.top_block, Qt.QWidget):
             self.qtgui_time_sink_x_0.set_line_alpha(i, alphas[i])
 
         self._qtgui_time_sink_x_0_win = sip.wrapinstance(self.qtgui_time_sink_x_0.qwidget(), Qt.QWidget)
-        self.top_grid_layout.addWidget(self._qtgui_time_sink_x_0_win, 0, 0, 1, 3)
-        for r in range(0, 1):
+        self.top_grid_layout.addWidget(self._qtgui_time_sink_x_0_win, 1, 1, 1, 1)
+        for r in range(1, 2):
             self.top_grid_layout.setRowStretch(r, 1)
-        for c in range(0, 3):
+        for c in range(1, 2):
             self.top_grid_layout.setColumnStretch(c, 1)
         self.qtgui_sink_x_0 = qtgui.sink_f(
             1024, #fftsize
@@ -188,12 +188,12 @@ class am_modulation(gr.top_block, Qt.QWidget):
         self.qtgui_sink_x_0.set_update_time(1.0/10)
         self._qtgui_sink_x_0_win = sip.wrapinstance(self.qtgui_sink_x_0.qwidget(), Qt.QWidget)
 
-        self.qtgui_sink_x_0.enable_rf_freq(False)
+        self.qtgui_sink_x_0.enable_rf_freq(True)
 
-        self.top_grid_layout.addWidget(self._qtgui_sink_x_0_win, 1, 0, 1, 3)
+        self.top_grid_layout.addWidget(self._qtgui_sink_x_0_win, 1, 0, 1, 1)
         for r in range(1, 2):
             self.top_grid_layout.setRowStretch(r, 1)
-        for c in range(0, 3):
+        for c in range(0, 1):
             self.top_grid_layout.setColumnStretch(c, 1)
         self.blocks_throttle_0 = blocks.throttle(gr.sizeof_float*1, samp_rate,True)
         self.blocks_multiply_xx_0 = blocks.multiply_vff(1)
